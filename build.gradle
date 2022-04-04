@@ -1,0 +1,78 @@
+/*Build ShadowJar for working jar*/
+buildscript {
+    repositories {
+        jcenter()
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+    dependencies {
+
+        classpath 'com.github.jengelman.gradle.plugins:shadow:1.2.4'
+        //https://plugins.gradle.org/plugin/com.dmdirc.git-version
+        classpath "gradle.plugin.com.zoltu.gradle.plugin:git-versioning:3.0.3"
+    }
+}
+
+//https://docs.gradle.org/1.8-rc-1/userguide/dependency_management.html#sec:controlling_caching
+configurations.all {
+    resolutionStrategy.cacheDynamicVersionsFor 1, 'minutes'
+}
+
+configurations.all {
+    resolutionStrategy.cacheChangingModulesFor 1, 'minutes'
+}
+
+apply plugin: 'java'
+apply plugin: 'com.github.johnrengelman.shadow'
+apply plugin: 'idea'
+
+dependencies {
+
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+    compile 'com.github.WalkingLibrary:Java-Dev-Lib:dea0bf691a'
+    compile 'com.google.code.gson:gson:2.8.5'
+}
+
+
+allprojects {
+
+    group 'com.jumbodinosaurs'
+    apply plugin: "com.zoltu.git-versioning"
+    archivesBaseName = "GreifAlert"
+    sourceCompatibility = 1.8
+    def versionInfo = ZoltuGitVersioning.versionInfo
+    sourceSets.main.java.srcDir "src/main/Java"
+    sourceSets.main.resources.srcDir "src/resources"
+
+    repositories {
+        mavenCentral()
+        maven { url 'https://jitpack.io' }
+    }
+
+
+}
+
+def versionInfo = ZoltuGitVersioning.versionInfo
+print "Build Version: ${versionInfo.major}.${versionInfo.minor}.${versionInfo.commitCount}\n"
+
+
+jar {
+    manifest {
+        attributes(
+                "Main-Class": "com.jumbodinosaurs.webserver.Main",
+                "Greif-Alert": version
+        )
+    }
+}
+
+
+subprojects {
+
+}
+
+
+
+
+
+        
