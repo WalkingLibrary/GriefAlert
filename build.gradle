@@ -5,6 +5,7 @@ buildscript {
         maven {
             url "https://plugins.gradle.org/m2/"
         }
+
     }
     dependencies {
 
@@ -32,6 +33,9 @@ dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
     compile 'com.github.WalkingLibrary:Java-Dev-Lib:dea0bf691a'
     compile 'com.google.code.gson:gson:2.8.5'
+
+
+    compile 'org.spigotmc:spigot-api:1.18.2-R0.1-SNAPSHOT' // The Spigot API with no shadowing. Requires the OSS repo.
 }
 
 
@@ -48,6 +52,14 @@ allprojects {
     repositories {
         mavenCentral()
         maven { url 'https://jitpack.io' }
+
+        maven {
+            url 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/'
+
+
+        }
+        maven { url = 'https://oss.sonatype.org/content/repositories/snapshots' }
+        maven { url = 'https://oss.sonatype.org/content/repositories/central' }
     }
 
 
@@ -60,7 +72,6 @@ print "Build Version: ${versionInfo.major}.${versionInfo.minor}.${versionInfo.co
 jar {
     manifest {
         attributes(
-                "Main-Class": "com.jumbodinosaurs.webserver.Main",
                 "Greif-Alert": version
         )
     }

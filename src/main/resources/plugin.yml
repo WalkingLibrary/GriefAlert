@@ -1,0 +1,6 @@
+name: GriefAlert
+version: 0.0.0
+author: Walking_Library
+main: com.jumbodinosaurs.griefalert.Main
+api-version: 1.14
+load: STARTUP
