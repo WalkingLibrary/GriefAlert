@@ -133,7 +133,7 @@ public class Main extends JavaPlugin implements Listener
         TextComponent message = new TextComponent(baseText);
 
 
-        String actionText = "/tp @p %s %s %s";
+        String actionText = "/tp %s %s %s";
         actionText = String.format(actionText, location.getBlockX(), location.getBlockY(), location.getBlockZ());
         message.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, actionText));
 
