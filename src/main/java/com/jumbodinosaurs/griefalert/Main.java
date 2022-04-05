@@ -133,8 +133,11 @@ public class Main extends JavaPlugin implements Listener
         TextComponent message = new TextComponent(baseText);
 
 
-        String actionText = "/tp %s %s %s";
-        actionText = String.format(actionText, location.getBlockX(), location.getBlockY(), location.getBlockZ());
+        String eventWorld = event.getPlayer().getWorld().getName();
+        String dimensionString = getDimensionString(eventWorld);
+        String actionText = "/execute in minecraft:%s run tp %s %s %s";
+        actionText = String.format(actionText, dimensionString, location.getBlockX(), location.getBlockY(),
+                location.getBlockZ());
         message.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, actionText));
 
         String hoverText = "Click To Teleport";
@@ -152,6 +155,28 @@ public class Main extends JavaPlugin implements Listener
         }
 
         LogManager.consoleLogger.info(username + "Broke Someone else's Block at " + location);
+    }
+
+    public static String getDimensionString(String eventWorld)
+    {
+        /*
+         * Process for getting DimensionString
+         *
+         *
+         *  */
+
+
+        if (eventWorld.toLowerCase().contains("end"))
+        {
+            return "the_end";
+        }
+
+        if (eventWorld.toLowerCase().contains("nether"))
+        {
+            return "the_nether";
+        }
+
+        return "overworld";
     }
 
     @Override
